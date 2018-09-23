@@ -1,10 +1,8 @@
 "use strict";
 
 // urls
-const urlCash = "wss://ws.blockchain.info/bch/inv",
-	urlCahsBE = "https://cashexplorer.bitcoin.com/", //"https://bitcoincash.blockexplorer.com/",
+const urlCash = "wss://ws.nanocrawler.cc/",
 	urlCore = "wss://ws.blockchain.info/inv",
-	urlCoreBE = "https://bitcoinlegacy.blockexplorer.com/",
 	urlCors = "https://txhighway-proxy.herokuapp.com/index.php?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
 	urlBtc = "api.btc.com/v3/",
 	urlBlockchainInfo = "https://api.blockchain.info/",
@@ -12,9 +10,7 @@ const urlCash = "wss://ws.blockchain.info/bch/inv",
 
 // sockets
 const socketCash = new WebSocket(urlCash),
-	socketCore = new WebSocket(urlCore),
-	socketCashBE = io(urlCahsBE);
-	/* socketCoreBE = io(urlCoreBE); */
+	socketCore = new WebSocket(urlCore);
 
 // DOM elements
 const canvas = document.getElementById("renderCanvas"),
@@ -111,54 +107,12 @@ let txCash = [],
 	feesCore = [],
 	feesCash = [];
 
-socketCashBE.on("connect", function(){
-	socketCashBE.emit("subscribe", "inv");
-});
-
-/* socketCoreBE.on("connect", function(){
-	socketCoreBE.emit("subscribe", "inv");
-}); */
-
-socketCashBE.on("tx", function(data){
-
-	let outs = [];
-	data.vout.forEach(k =>{
-		let addr = Object.keys(k)[0];
-		let val = k[addr] / 100000000;
-		outs.push({"addr":addr, "value": val});
-	});
-	
-	var txData = {
-		"out": outs,
-		"hash": data.txid,
-		"inputs": [],
-		"valueOut": data.valueOut,
-		"isCash": true
-	}
-
-	setTimeout(() => {
-		newTX(true, txData);	
-	}, 1000);
-	
-});
-
-/* socketCoreBE.on("tx", function(data){
-	var txData = {
-		"out": data.vout,
-		"hash": data.txid,
-		"inputs": [],
-		"valueOut": data.valueOut,
-		"isCash": true
-	}
-	setTimeout(() => {
-		newTX(false, txData);	
-	}, 3000);
-}); */
-
 // connect to sockets
 socketCash.onopen = ()=>{
-	socketCash.send(JSON.stringify({"op":"unconfirmed_sub"}));
-	socketCash.send(JSON.stringify({"op":"blocks_sub"}));
+	socketCash.send(JSON.stringify({ 
+    event: "subscribe", 
+    data: ["all"] 
+  }));
 }
 
 socketCore.onopen = ()=> {
@@ -168,12 +122,18 @@ socketCore.onopen = ()=> {
 
 socketCash.onmessage = (onmsg) =>{
 	let res = JSON.parse(onmsg.data);
-
-	if (res.op == "utx"){
-		newTX(true, res.x);
-	} else {
-		blockNotify(res.x, true);
+	
+	var txData = {
+		"out": [res.data.account],
+		"hash": res.data.hash,
+		"inputs": [],
+		"valueOut": (res.data.amount / 1000000000000000000000000000000),
+		"isCash": true
 	}
+
+	console.log(txData)
+	
+	newTX(true, txData);
 }
 
 socketCash.onerror = (onerr) =>{
@@ -307,7 +267,7 @@ function updateMempoolData(){
 }
 
 function updatePriceData(){
-	getPriceData(urlCoinMarketCap + "bitcoin-cash/");
+	getPriceData(urlCoinMarketCap + "nano/");
 	getPriceData(urlCoinMarketCap + "bitcoin/");
 }
 // get current balance of dev donation address
@@ -341,7 +301,7 @@ function getPriceData(url){
 	xhr.onload = function(){
 		if (xhr.readyState == 4 && xhr.status == 200) {		
 			let res = JSON.parse(xhr.responseText);
-			if (res[0].symbol == "BCH"){
+			if (res[0].symbol == "NANO"){
 				PRICE_BCH = res[0].price_usd;
 				document.getElementById("price_bch").textContent = "USD $" + formatWithCommas(parseFloat(PRICE_BCH).toFixed(2));
 			} else {
