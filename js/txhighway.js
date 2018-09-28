@@ -122,6 +122,8 @@ socketCore.onopen = ()=> {
 
 socketCash.onmessage = (onmsg) =>{
 	let res = JSON.parse(onmsg.data);
+
+	console.log(res)
 	
 	var txData = {
 		"out": [res.data.account],
@@ -130,8 +132,6 @@ socketCash.onmessage = (onmsg) =>{
 		"valueOut": (res.data.amount / 1000000000000000000000000000000),
 		"isCash": true
 	}
-
-	console.log(txData)
 	
 	newTX(true, txData);
 }
@@ -495,7 +495,7 @@ function addTxToList(isCash, txid, valueOut, car){
 
     if (isCash){
 		listItem.className = "txinfo-cash";
-		anchor.setAttribute("href", "https://bch.btc.com/" + txid);
+		anchor.setAttribute("href", "https://nanocrawler.cc/explorer/block/" + txid);
     } else {
 		listItem.className = "txinfo-core";
 		anchor.setAttribute("href", "https://btc.com/" + txid);
@@ -598,7 +598,7 @@ function updateFees(isCash, fee){
         var avgbch = parseFloat(avg).toFixed(4);
         var valueIsNaN = isNaN(avgbch);
         if (valueIsNaN) {
-            document.getElementById("fees-bch").textContent = "~ $0.01";
+            document.getElementById("fees-bch").textContent = "$0.00";
         } else {
             document.getElementById("fees-bch").textContent = "$" + avgbch;
         }
