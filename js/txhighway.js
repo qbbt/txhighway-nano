@@ -76,7 +76,7 @@ let audioMotorcycle = null,
 let WIDTH = null,
 	HEIGHT = null,
 	SINGLE_LANE = HEIGHT/14,
-	SPEED = 8,
+	SPEED = 12,
 	SPEED_MODIFIER = 0.5,
 	VOLUME = 0.5,
 	PRICE_BCH = 0,
@@ -622,10 +622,10 @@ function getCar(valueOut, donation, isCash, userTx, sdTx, sw){
 		return carLambo;
 	}
 
-	if(sw) return carSegwit;
+	//if(sw) return carSegwit;
 	
 	// satoshi bones tx
-	if(sdTx) return carSatoshiBones;	
+	//if(sdTx) return carSatoshiBones;	
 
 	// user tx vehicles need to go here
 	if (userTx){
