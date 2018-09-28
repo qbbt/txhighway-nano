@@ -117,13 +117,10 @@ socketCash.onopen = ()=>{
 
 socketCore.onopen = ()=> {
 	socketCore.send(JSON.stringify({"op":"unconfirmed_sub"}));
-	socketCore.send(JSON.stringify({"op":"blocks_sub"}));
 }
 
 socketCash.onmessage = (onmsg) =>{
 	let res = JSON.parse(onmsg.data);
-
-	console.log(res)
 	
 	var txData = {
 		"out": [res.data.account],
@@ -476,7 +473,8 @@ function newTX(isCash, txInfo){
 			if(e.id == txInfo.hash) txExsists = true;
 		});
 		if (txExsists) return;
-		createVehicle(isCash, txCore, txInfo, 12, false);
+		let randLane = Math.floor(Math.random() * 2) + 12;
+		createVehicle(isCash, txCore, txInfo, randLane, false);
 	}
 }
 
@@ -546,6 +544,14 @@ function createVehicle(type, arr, txInfo, lane, isCash){
 	let car = getCar(valOut, donation, isCash, userTx, sdTx, txInfo.sw);
 	let width = SINGLE_LANE * (car.width / car.height);
 	let x = -width;
+
+	if(!isCash){
+		if(txInfo.sw){
+			lane = 13;
+		} else {
+			lane = 12;
+		}
+	}
 
 	// fix vehicle positioning to prevent pile ups.
 	if (arr.length > 0){
@@ -622,7 +628,7 @@ function getCar(valueOut, donation, isCash, userTx, sdTx, sw){
 		return carLambo;
 	}
 
-	//if(sw) return carSegwit;
+	if(sw) return carSegwit;
 	
 	// satoshi bones tx
 	//if(sdTx) return carSatoshiBones;	
@@ -810,6 +816,8 @@ let isDonationTx = function(txInfo){
 // check for satoshi dice tx
 let isSatoshiBonesTx = function(txInfo){
 	let satoshiBonesTx = false;
+
+	console.log(txInfo)
 
 	txInfo.out.forEach((key)=>{
 		check(key.addr);
