@@ -5,8 +5,7 @@ const urlCash = "wss://ws.nanocrawler.cc/",
 	urlCore = "wss://ws.blockchain.info/inv",
 	urlCors = "https://txhighway-proxy.herokuapp.com/index.php?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
 	urlBtc = "api.btc.com/v3/",
-	urlBlockchainInfo = "https://api.blockchain.info/",
-	urlCoinMarketCap = "https://api.coinmarketcap.com/v1/ticker/";
+	urlBlockchainInfo = "https://api.blockchain.info/";
 
 // sockets
 const socketCash = new WebSocket(urlCash),
@@ -264,8 +263,9 @@ function updateMempoolData(){
 }
 
 function updatePriceData(){
-	getPriceData(urlCoinMarketCap + "nano/");
-	getPriceData(urlCoinMarketCap + "bitcoin/");
+	console.log('Updating prices...');
+	getPriceData("nano");
+	getPriceData("bitcoin");
 }
 // get current balance of dev donation address
 function getDevDonations(){
@@ -292,17 +292,18 @@ function getDevDonations(){
 }
 
 // get price in usd for bch & btc
-function getPriceData(url){
+function getPriceData(coin){
 	let xhr = new XMLHttpRequest();
+	var url = "https://api.coingecko.com/api/v3/coins/"+coin+"?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false";
 
 	xhr.onload = function(){
 		if (xhr.readyState == 4 && xhr.status == 200) {		
 			let res = JSON.parse(xhr.responseText);
-			if (res[0].symbol == "NANO"){
-				PRICE_BCH = res[0].price_usd;
+			if (coin == "nano"){
+				PRICE_BCH = res.market_data.current_price.usd;
 				document.getElementById("price_bch").textContent = "USD $" + formatWithCommas(parseFloat(PRICE_BCH).toFixed(2));
 			} else {
-				PRICE_BTC = res[0].price_usd;
+				PRICE_BTC = res.market_data.current_price.usd;
 				document.getElementById("price_btc").textContent = "USD $" + formatWithCommas(parseFloat(PRICE_BTC).toFixed(2));
 			}
 		}
