@@ -108,10 +108,13 @@ let txCash = [],
 
 // connect to sockets
 socketCash.onopen = ()=>{
-	socketCash.send(JSON.stringify({ 
-    event: "subscribe", 
-    data: ["all"] 
-  }));
+	socketCash.send(JSON.stringify({
+		"action":"subscribe",
+		"topic":"confirmation",
+		"options":{
+			"confirmation_type":"active_quorum"
+		}
+	}));
 }
 
 socketCore.onopen = ()=> {
@@ -122,12 +125,14 @@ socketCash.onmessage = (onmsg) =>{
 	let res = JSON.parse(onmsg.data);
 	
 	var txData = {
-		"out": [res.data.account],
-		"hash": res.data.hash,
+		"out": [res.message.account],
+		"hash": res.message.hash,
 		"inputs": [],
-		"valueOut": (res.data.amount / 1000000000000000000000000000000),
+		"valueOut": (res.message.amount / 1000000000000000000000000000000),
 		"isCash": true
 	}
+
+	console.log('WS', res, txData);
 	
 	newTX(true, txData);
 }
