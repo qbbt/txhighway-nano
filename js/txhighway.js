@@ -3,7 +3,6 @@
 // urls
 const urlCash = "wss://www.nanolooker.com/ws",
 	urlCore = "wss://ws.blockchain.info/inv",
-	urlCors = "https://cors-proxy.htmldriven.com/?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
 	urlBtc = "api.btc.com/v3/",
 	urlBlockchainInfo = "https://api.blockchain.info/";
 
@@ -261,8 +260,8 @@ function mobileCheck(){
 
 // gets latest utx count and sets it to signs
 function updateMempoolData(){
-	getPoolData(urlCors + "https://chain." + urlBtc + "tx/unconfirmed/summary", false);
-	getPoolData(urlCors + "https://bch-chain." + urlBtc + "tx/unconfirmed/summary", true);
+	getPoolData("https://chain." + urlBtc + "tx/unconfirmed/summary", false);
+	getPoolData("https://bch-chain." + urlBtc + "tx/unconfirmed/summary", true);
 }
 
 function updatePriceData(){
@@ -273,7 +272,7 @@ function updatePriceData(){
 // get current balance of dev donation address
 function getDevDonations(){
 	let xhr = new XMLHttpRequest();
-	let url =  urlCors + "https://bch-chain." + urlBtc + "address/3MtCFL4aWWGS5cDFPbmiNKaPZwuD28oFvF";
+	let url = "https://bch-chain." + urlBtc + "address/3MtCFL4aWWGS5cDFPbmiNKaPZwuD28oFvF";
 
 	xhr.onload = function(){
 		if (xhr.readyState == 4 && xhr.status == 200) {
@@ -333,7 +332,7 @@ function blockNotify(data, isCash){
 		amount = data.nTx;
 		cashPoolInfo.textContent = formatWithCommas(t - amount);
 		setTimeout(() => {
-			getPoolData(urlCors + "https://bch-chain." + urlBtc + "tx/unconfirmed/summary", true);
+			getPoolData("https://bch-chain." + urlBtc + "tx/unconfirmed/summary", true);
 		}, 1000);
 	} else {
 		ticker = "BTC";
@@ -351,7 +350,7 @@ function blockNotify(data, isCash){
 
 		corePoolInfo.textContent = formatWithCommas(t - amount);
 		setTimeout(() => {
-			getPoolData(urlCors + "https://chain." + urlBtc + "tx/unconfirmed/summary", false);
+			getPoolData("https://chain." + urlBtc + "tx/unconfirmed/summary", false);
 			getCoreConfTime(urlBlockchainInfo + "charts/avg-confirmation-time?format=json&cors=true");
 
 		}, 1000);
