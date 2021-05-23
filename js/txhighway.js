@@ -3,7 +3,7 @@
 // urls
 const urlCash = "wss://www.nanolooker.com/ws",
 	urlCore = "wss://ws.blockchain.info/inv",
-	urlCors = "http://cors-proxy.htmldriven.com/?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
+	urlCors = "https://cors-proxy.htmldriven.com/?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
 	urlBtc = "api.btc.com/v3/",
 	urlBlockchainInfo = "https://api.blockchain.info/";
 
