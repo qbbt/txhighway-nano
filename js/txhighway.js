@@ -31,14 +31,14 @@ const canvas = document.getElementById("renderCanvas"),
 
 // sprites
 const carCore = new Image(),
-	carMicroCash = new Image(),
-	carSmallCash = new Image(),
-	carSmallMedCash = new Image(),
-	carMediumCash = new Image(),
-	carLargeCash = new Image(),
-	carXLargeCash = new Image(),
-	carWhaleCash = new Image(),
-	carUserCash = new Image(),
+	carMicroNano = new Image(),
+	carSmallNano = new Image(),
+	carSmallMedNano = new Image(),
+	carMediumNano = new Image(),
+	carLargeNano = new Image(),
+	carXLargeNano = new Image(),
+	carWhaleNano = new Image(),
+	carUserNano = new Image(),
 	carMicroCore = new Image(),
 	carSmallCore = new Image(),
 	carSmallMedCore = new Image(),
@@ -168,15 +168,15 @@ function init(){
 	window.addEventListener("load", resize, false);
 	window.addEventListener("resize", resize, false);
 
-	//cash vehicles
-	carMicroCash.src = "assets/sprites/bch-micro.png";
-	carSmallCash.src = "assets/sprites/bch-small.png";
-	carSmallMedCash.src = "assets/sprites/bch-small-med.png";
-	carMediumCash.src = "assets/sprites/bch-medium.png";
-	carLargeCash.src = "assets/sprites/bch-large.png";
-	carXLargeCash.src = "assets/sprites/bch-xlarge.png";
-	carWhaleCash.src = "assets/sprites/bch-whale.png";
-	carUserCash.src = "assets/sprites/tx-taxi.png"; 
+	//nano vehicles
+	carMicroNano.src = "assets/sprites/nano-micro.png";
+	carSmallNano.src = "assets/sprites/nano-small.png";
+	carSmallMedNano.src = "assets/sprites/nano-small-med.png";
+	carMediumNano.src = "assets/sprites/nano-medium.png";
+	carLargeNano.src = "assets/sprites/nano-large.png";
+	carXLargeNano.src = "assets/sprites/nano-xlarge.png";
+	carWhaleNano.src = "assets/sprites/nano-whale.png";
+	carUserNano.src = "assets/sprites/tx-taxi.png"; 
 	carLambo.src = "assets/sprites/lambo.png";
 	carSatoshiBones.src = "assets/sprites/bones.png";
 
@@ -639,7 +639,7 @@ function getCar(valueOut, donation, isCash, userTx, sdTx, sw){
 	// user tx vehicles need to go here
 	if (userTx){
 		if (isCash){
-			return carUserCash;
+			return carUserNano;
 		} else {
 			return carUserCore;
 		}
@@ -654,44 +654,44 @@ function getCar(valueOut, donation, isCash, userTx, sdTx, sw){
 	
 	if (val <= TX_MICRO){
 		if (isCash){
-			return carMicroCash;
+			return carMicroNano;
 		} else {
 			return carMicroCore;
 		}
 
 	} else if (val > TX_MICRO && val <= TX_SMALL){
 		if (isCash){
-			return carSmallCash;
+			return carSmallNano;
 		} else {
 			return carSmallCore;
 		}
 	} else if (val > TX_SMALL && val <= TX_SMALL_MED){	
 		if (isCash){
-			return carSmallMedCash;
+			return carSmallMedNano;
 		} else {
 			return carSmallMedCore;
 		}
 	} else if (val > TX_SMALL_MED && val <= TX_MEDIUM){
 		if (isCash){
-			return carMediumCash;
+			return carMediumNano;
 		} else {
 			return carMediumCore;
 		}
 	} else if (val > TX_MEDIUM && val <= TX_LARGE){
 		if (isCash){
-			return carLargeCash;
+			return carLargeNano;
 		} else {
 			return carLargeCore;
 		}
 	} else if (val > TX_LARGE && val <= TX_WHALE){
 		if (isCash){
-			return carXLargeCash;
+			return carXLargeNano;
 		} else {
 			return carXLargeCore;
 		}
 	} else if (val > TX_WHALE){
 		if (isCash){
-			return carWhaleCash;
+			return carWhaleNano;
 		} else {
 			return carWhaleCore;
 		}
@@ -703,7 +703,7 @@ function getCar(valueOut, donation, isCash, userTx, sdTx, sw){
 function addSounds(carType){
 	if (!isVisible) return;
 
-	if (carType == carUserCash || carType == carUserCore) {
+	if (carType == carUserNano || carType == carUserCore) {
 		playSound(audioLaCucaracha);
 	}
 
@@ -721,24 +721,24 @@ function addSounds(carType){
 		}
 	}
 
-	if (carType == carMicroCash || carType == carMicroCore){
+	if (carType == carMicroNano || carType == carMicroCore){
 		playSound(audioMotorcycle);
-	} else if (carType == carMicroCash ||
+	} else if (carType == carMicroNano ||
 		carType == carMicroCore ||
-		carType == carSmallCash ||
+		carType == carSmallNano ||
 		carType == carSmallCore ||
-		carType == carSmallMedCash ||
+		carType == carSmallMedNano ||
 		carType == carSmallMedCore){
 			playSound(audioCar);
-	} else if (carType == carMediumCash ||
+	} else if (carType == carMediumNano ||
 		carType == carMediumCore ||
-		carType == carLargeCash ||
+		carType == carLargeNano ||
 		carType == carLargeCore ||
-		carType == carXLargeCash ||
+		carType == carXLargeNano ||
 		carType == carXLargeCore){
 			audioDiesel.playbackRate = 1.4;
 			playSound(audioDiesel);	
-	} else if (carType == carWhaleCash ||
+	} else if (carType == carWhaleNano ||
 		carType == carWhaleCore){
 			audioSemi.playbackRate = 1.8;
 			playSound(audioSemi);
