@@ -135,7 +135,7 @@ socketCash.onmessage = (onmsg) =>{
 }
 
 socketCash.onerror = (onerr) =>{
-	console.log(onerr);
+	console.log('socketCash error', onerr);
 }
 
 socketCore.onmessage = (onmsg)=> {
@@ -820,7 +820,7 @@ let isDonationTx = function(txInfo){
 let isSatoshiBonesTx = function(txInfo){
 	let satoshiBonesTx = false;
 
-	console.log(txInfo)
+	console.log('isSatoshiBonesTx', txInfo)
 
 	txInfo.out.forEach((key)=>{
 		check(key.addr);
