@@ -3,7 +3,7 @@
 // urls
 const urlCash = "wss://www.nanolooker.com/ws",
 	urlCore = "wss://ws.blockchain.info/inv",
-	urlCors = "https://txhighway-proxy.herokuapp.com/index.php?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
+	urlCors = "http://cors-proxy.htmldriven.com/?url=", //"https://txhighway-cors-proxy-porlybe.c9users.io/index.php?url=", //"https://cors-anywhere.herokuapp.com/", //"http://cors-proxy.htmldriven.com/?url=",
 	urlBtc = "api.btc.com/v3/",
 	urlBlockchainInfo = "https://api.blockchain.info/";
 
@@ -123,7 +123,7 @@ socketCore.onopen = ()=> {
 
 socketCash.onmessage = (onmsg) =>{
 	let res = JSON.parse(onmsg.data);
-	
+
 	var txData = {
 		"out": [res.message.account],
 		"hash": res.message.hash,
@@ -132,8 +132,6 @@ socketCash.onmessage = (onmsg) =>{
 		"isCash": true
 	}
 
-	console.log('WS', res, txData);
-	
 	newTX(true, txData);
 }
 
