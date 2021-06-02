@@ -60,6 +60,7 @@ const car = {
 	user: new Image(),
 	spam: new Image(),
 	segwit: new Image(),
+	change: new Image(),
 };
 
 // sound system
@@ -137,7 +138,8 @@ socketCash.onmessage = (onmsg) =>{
 		"hash": res.message.hash,
 		"inputs": [],
 		"valueOut": (res.message.amount / 1000000000000000000000000000000),
-		"isCash": true
+		"isCash": true,
+		"sw": res.message.block.subtype === "change"
 	}
 
 	newTX(true, txData);
@@ -177,6 +179,7 @@ function init(){
 	car.user.src = "assets/sprites/tx-taxi.png";
 	car.spam.src = "assets/sprites/spam.png";
 	car.segwit.src = "assets/sprites/segwit.png";
+	car.change.src = "assets/sprites/change.png";
 
 	//nano vehicles
 	car.micro.nano.src = "assets/sprites/nano-micro.png";
@@ -528,7 +531,11 @@ function updateFees(isCash, fee){
 
 /* return car based upon transaction size*/
 function getCar(valueOut, isCash, userTx, sw){
-	if(sw) return car.segwit;
+	if(sw) {
+		if (isCash)
+			return car.change;
+		return car.segwit;
+	}
 	
 	// user tx vehicles need to go here
 	if (userTx){
