@@ -304,9 +304,9 @@ function blockNotify(data, isCash){
 	// sets speed modifier for btc lane
 	let mod = t/amount/100;
 	if (mod >= 0){
-		SPEED_MODIFIER = .004;
+		SPEED_MODIFIER = .0004;
 	} else {
-		SPEED_MODIFIER = .004;
+		SPEED_MODIFIER = .0004;
 	}
 
 	setTimeout(() => {
