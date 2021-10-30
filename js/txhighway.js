@@ -85,7 +85,7 @@ let audioMotorcycle = null,
 let WIDTH = null,
 	HEIGHT = null,
 	SINGLE_LANE = HEIGHT/14,
-	SPEED = 12,
+	SPEED = 120,
 	SPEED_MODIFIER = 0,
 	VOLUME = 0.5,
 	PRICE_BCH = 0,
@@ -304,9 +304,9 @@ function blockNotify(data, isCash){
 	// sets speed modifier for btc lane
 	let mod = t/amount/100;
 	if (mod >= 0){
-		SPEED_MODIFIER = .002;
+		SPEED_MODIFIER = .0006;
 	} else {
-		SPEED_MODIFIER = .002;
+		SPEED_MODIFIER = .0006;
 	}
 
 	setTimeout(() => {
