@@ -1,7 +1,7 @@
 "use strict";
 
 // urls
-const urlCash = "wss://www.nanolooker.com/ws",
+const urlCash = "wss://www.blocklattice.io/ws",
 	urlCore = "wss://ws.blockchain.info/inv",
 	urlBtc = "api.btc.com/v3/",
 	urlBlockchainInfo = "https://api.blockchain.info/";
